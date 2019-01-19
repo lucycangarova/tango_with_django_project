@@ -1,5 +1,6 @@
 from django.conf.urls import url 
 from rango import views 
+from django.shortcuts import render
 
 urlpatterns = [ 
 	url(r'^$', views.index, name='index'),
