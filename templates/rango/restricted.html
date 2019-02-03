@@ -1,0 +1,16 @@
+{% extends 'rango/base.html' %} 
+{% load staticfiles %}
+
+{% block title_block %}
+	Restricted Page
+{% endblock %}
+
+{% block body_block %}
+	<h1>Rango says,</h1>
+	<strong>welcome to the Restricted Page.</strong>
+
+	<div>
+		<img src="{% static 'images/hamster.jpg' %}" alt="Picture of Hamster" height="400" />
+	</div>
+
+{% endblock %}
