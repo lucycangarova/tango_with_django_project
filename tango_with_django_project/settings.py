@@ -79,7 +79,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tango_with_django_project.wsgi.application'
 
-
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 1209600
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
