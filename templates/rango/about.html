@@ -2,19 +2,19 @@
 {% load staticfiles %}
 
 {% block body_block %}
-		<h1>Rango says...</h1> 
+	<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+	<div class="jumbotron">
+		<h1 class="display-3">Rango says...</h1>
+		<h3 class="display-3" style="font-size: 150%"> here is the about page. <br /> 
+		<strong>This tutorial has been put together by {{ boldmessage }}.</strong> </h3> <br /> 
+	</div>
 
-		<div> 
-			here is the about page. <br /> 
-			<strong>This tutorial has been put together by {{ boldmessage }}.</strong> <br /> 
-		</div> 
+	<div> 
+		<img src="{% static 'images/dog.jpg' %}" alt="Picture of Dog" height="380" /> 
+		<img src="{{MEDIA_URL}}cat.jpg" alt="Picture of Cat" height="380">
+	</div> 
 
-		<div> 
-			<img src="{% static 'images/dog.jpg' %}" alt="Picture of Dog" height="400" /> 
-			<img src="{{MEDIA_URL}}cat.jpg" alt="Picture of Cat" height="400">
-		</div> 
-
-		<div>
-			<p>visits: {{visits}}</p>
-		</div>
+	<div>
+		<p>visits: {{visits}}</p>
+	</div>
 {% endblock %}

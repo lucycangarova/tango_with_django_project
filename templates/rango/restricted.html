@@ -6,8 +6,11 @@
 {% endblock %}
 
 {% block body_block %}
-	<h1>Rango says,</h1>
-	<strong>welcome to the Restricted Page.</strong>
+	<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+	<div class="jumbotron">
+		<h1 class="display-3">Rango says...</h1>
+		<h3 class="display-3" style="font-size: 150%"> <strong>welcome to the Restricted Page.</strong> </h3>
+	</div>
 
 	<div>
 		<img src="{% static 'images/hamster.jpg' %}" alt="Picture of Hamster" height="400" />
