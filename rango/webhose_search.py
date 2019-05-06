@@ -14,8 +14,12 @@ def read_webhose_key():
 	webhose_api_key = None
 
 	try:
-		with open('search.key', 'r') as f:
-			webhose_api_key = f.readline().strip()
+		try:
+			with open('search.key', 'r') as f:
+				webhose_api_key = f.readline().strip()
+		except:
+			with open('../search.key', 'r') as f:
+				webhose_api_key = f.readline().strip()
 	except:
 		raise IOError('search.key file not found')
 
@@ -40,8 +44,7 @@ def run_query(search_terms, size=10):
 
 	# Use string formatting to construct the complete API URL
 	# search_url is a string split over multiple lines
-	search_url = ('{root_url}?token={key}&format=json&q={query}&sort=relevancy&size={size}')
-		.format(root_url=root_url, key=webhose_api_key,	query=query_string,	size=size)
+	search_url = ('{root_url}?token={key}&format=json&q={query}&sort=relevancy&size={size}').format(root_url=root_url, key=webhose_api_key,	query=query_string,	size=size)
 
 	results = []
 
@@ -61,3 +64,24 @@ def run_query(search_terms, size=10):
 
 	# Return the list of results to the calling function.
 	return results
+
+def main():
+    # Query, get the results and create a variable to store rank.
+    query = input("Please enter a query: ")
+    results = run_query(query)
+    rank = 1
+
+    # Loop through our results.
+    for result in results:
+        # Print details.
+        print("Rank {0}".format(rank))
+        print(result['title'])
+        print(result['link'])
+        print(result['summary'])
+        print()
+
+        # Increment our rank counter by 1.
+        rank += 1
+
+if __name__ == '__main__':
+    main()
