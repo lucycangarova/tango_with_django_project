@@ -6,6 +6,7 @@ from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required 
 from datetime import datetime
+from rango.webhose_search import run_query
 
 def get_server_side_cookie(request, cookie, default_val=None): 
 	val = request.session.get(cookie) 
@@ -196,3 +197,15 @@ def user_logout(request):
 	# Take the user back to the homepage. 
 	return HttpResponseRedirect(reverse('index')) 
 '''
+
+def search(request):
+	context_dict = {}
+	result_list = []
+	if request.method == 'POST':
+		query = request.POST['query'].strip()
+		if query:
+			# Run our Webhose search function to get the results list!
+			result_list = run_query(query)
+			context_dict['query'] = query
+	context_dict['result_list'] = result_list
+	return render(request, 'rango/search.html', context_dict)
