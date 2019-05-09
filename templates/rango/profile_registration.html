@@ -1,0 +1,22 @@
+{% extends "rango/base.html" %}
+{% load staticfiles %}
+
+{% block body_block %}
+	<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+	<div class="jumbotron">
+		<h1 class="display-3">Login to Rango</h1>
+	</div>
+	<form method="post" action="." enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="form-group" >
+			{% for field in profile_form %}
+				{{ field.errors }}
+				<b>{{ field.label_tag }}</b> {{ field }}<br><br>
+				{% if field.help_text %}
+					<p class="help_text">{{ field.help_text|safe }}</p>
+				{% endif %}
+			{% endfor %}			
+		</div>
+		<input type="submit" class="btn btn-default" value="Submit"/>
+	</form>
+{% endblock %}

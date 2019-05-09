@@ -1,0 +1,35 @@
+{% extends 'rango/base.html' %} 
+{% load staticfiles %}
+
+{% block title_block %}
+	Users
+{% endblock %}
+
+{% block body_block %}
+	{% if user.is_authenticated %}
+		<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+		<div class="jumbotron">
+			<h1 class="display-3">Users</h1>
+		</div>
+
+		{% for userprofile in users %}
+		<div style="clear: both;">
+			<img src="{{ MEDIA_URL }}{{userprofile.picture}}" alt="Profile picture" style="max-width: 25%; max-height: 100%; float: right; margin-top: 5px; margin-bottom: 5px;" onerror="this.onerror=null;this.src='{% static 'images/default-profile.jpg' %}';"/>
+			<p class="display-3" style="float: left; margin: 5px;">
+				<h3 style="font-size: 150%"> <i>{{userprofile.user.username}}</i> profile: </h3>
+				<hr style="width: 70%; float: left;" />
+				<b>Email:</b><br/>
+				{{userprofile.user.email}}<br/><br/>
+				<b>Website:</b><br/>
+				<a href="{{userprofile.website}}">{{userprofile.website}}</a><br/><br/>	
+			</p>
+		</div>
+		{% endfor %}
+
+	{% else %}
+		<div class="jumbotron">
+			<h1 class="display-3">Rango says...</h1>
+			<h3 class="display-3" style="font-size: 150%"> <strong>you need to <a href="{% url 'auth_login' %}"> log in first.</strong> </h3>
+		</div>
+	{% endif %}
+{% endblock %}

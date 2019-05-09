@@ -1,0 +1,46 @@
+{% extends 'rango/base.html' %} 
+{% load staticfiles %}
+
+{% block title_block %}
+	Profile
+{% endblock %}
+
+{% block body_block %}
+	{% if selecteduser %}
+		<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+		<div class="jumbotron">
+			<h1 class="display-3">Rango says...</h1>
+		</div>
+
+		<div>
+			<img src="{{ MEDIA_URL }}{{userprofile.picture}}" alt="Profile picture" style="width: 50%; max-height: auto; float: right;" onerror="this.onerror=null;this.src='{% static 'images/default-profile.jpg' %}';" />
+			<p class="display-3" style="float: left; margin: 5px;">
+				<h3 style="font-size: 150%"> <strong>welcome to <b><i>{{selecteduser.username}}</i></b> profile.</strong> </h3>
+				<hr style="width: 48%; float: left;" />
+
+				{% if user.is_authenticated %}
+				<b>Email:</b><br/>
+					{{selecteduser.email}}<br/><br/>
+				{% endif %}
+
+				<b>Website:</b><br/>
+				<a href="{{userprofile.website}}">{{userprofile.website}}</a><br/><br/>
+
+				{% if user.is_authenticated %}
+					{% if selecteduser.username == user.username %}
+						<form method="post" action="." enctype="multipart/form-data">
+							{% csrf_token %}
+							{{ form.as_p }}
+							<input type="submit" value="Update" />
+						</form>
+					{% endif %}
+				{% endif %}
+			</p>
+		</div>
+	{% else %}
+		<div class="jumbotron">
+			<h1 class="display-3">Rango says...</h1>
+			<h3 class="display-3" style="font-size: 150%"> <strong>you need to <a href="{% url 'auth_login' %}"> log in first.</strong> </h3>
+		</div>
+	{% endif %}
+{% endblock %}

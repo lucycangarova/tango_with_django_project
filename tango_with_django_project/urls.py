@@ -25,7 +25,7 @@ from registration.backends.simple.views import RegistrationView
 #if successful at logging
 class MyRegistrationView(RegistrationView):
     def get_success_url(self, user):
-        return '/rango/'
+        return '/rango/register_profile/'
 
 urlpatterns = [
 	url(r'^$', views.index, name='index'),

@@ -1,12 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
-from rango.models import Category, Page
+from rango.models import Category, Page, UserProfile
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required 
 from datetime import datetime
 from rango.webhose_search import run_query
+from django.contrib.auth.models import User
 
 def get_server_side_cookie(request, cookie, default_val=None): 
 	val = request.session.get(cookie) 
@@ -79,7 +80,7 @@ def show_category(request, category_name_slug):
 
 		# Retrieve all of the associated pages. 
 		# Note that filter() will return a list of page objects or an empty list
-		pages = Page.objects.filter(category=category)
+		pages = Page.objects.filter(category=category).order_by('-views')
 
 		# Adds our results list to the template context under name pages. 
 		context_dict['pages'] = pages 
@@ -91,6 +92,17 @@ def show_category(request, category_name_slug):
 		# the template will display the "no category" message for us. 
 		context_dict['category'] = None 
 		context_dict['pages'] = None
+
+	context_dict['query'] = category.name
+
+	result_list = []
+	if request.method == 'POST':
+		query = request.POST['query'].strip()
+		if query:
+			# Run our Webhose search function to get the results list!
+			result_list = run_query(query)
+			context_dict['query'] = query
+			context_dict['result_list'] = result_list
 
 	# Go render the response and return it to the client. 
 	return render(request, 'rango/category.html', context_dict) 
@@ -131,6 +143,26 @@ def add_page(request, category_name_slug):
 
 	context_dict = {'form':form, 'category' : category}
 	return render(request, 'rango/add_page.html', context_dict)
+
+@login_required
+def register_profile(request):
+	profile_form = UserProfileForm()
+
+	if request.method == 'POST':
+		profile_form = UserProfileForm(request.POST, request.FILES)
+
+		if profile_form.is_valid():
+			profile = profile_form.save(commit=False)
+			profile.user = request.user
+			profile.save()
+
+			return redirect('rango:index')
+		else:
+			# Invalid form
+			print(profile_form.errors) 
+
+	return render(request, 'rango/profile_registration.html', {'profile_form': profile_form}) 
+
 
 '''def register(request):
 	registered = False
@@ -209,3 +241,47 @@ def search(request):
 			context_dict['query'] = query
 	context_dict['result_list'] = result_list
 	return render(request, 'rango/search.html', context_dict)
+
+def track_url(request):
+	page_id = None
+	url = '/rango/'
+	if request.method == 'GET':
+		if 'page_id' in request.GET:
+			page_id = request.GET['page_id']
+			try:
+				page = Page.objects.get(id=page_id)
+				page.views = page.views + 1
+				page.save()
+				url = page.url
+			except:
+				pass
+	return redirect(url)
+
+@login_required
+def profile(request, username):
+	try:
+		user = User.objects.get(username=username)
+	except User.DoesNotExist:
+		return redirect('index')
+
+	userprofile = UserProfile.objects.get_or_create(user=user)[0]
+	form = UserProfileForm({'website': userprofile.website, 'picture': userprofile.picture})
+
+	if request.method == 'POST':
+		form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
+		if form.is_valid():
+			form.save(commit=True)
+			return redirect('rango:profile', user.username)
+		else:
+			print(form.errors)
+
+	return render(request, 'rango/profile.html',{'userprofile': userprofile, 'selecteduser': user, 'form': form})
+
+
+def users(request):
+	context_dict = {}
+
+	users = UserProfile.objects.all();
+	context_dict['users'] = users
+
+	return render(request, 'rango/users.html', context_dict)
