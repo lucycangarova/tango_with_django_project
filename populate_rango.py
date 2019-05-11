@@ -58,9 +58,61 @@ def populate():
 		"url":"http://flask.pocoo.org",
 		"views":1}]
 
+	pascal_pages=[{"title":"Tutorials point - Pascal",
+		"url":"https://www.tutorialspoint.com/pascal/",
+		"views":0},
+		{"title":"Pascal Programming",
+		"url":"http://www.pascal-programming.info/index.php",
+		"views":1}]
+
+	perl_pages=[{"title":"Perl Tutorial for Beginners: Learn in 1 Day",
+		"url":"https://www.guru99.com/perl-tutorials.html",
+		"views":0},
+		{"title":"The Perl Programming",
+		"url":"https://www.perl.org/",
+		"views":1}]
+
+	php_pages=[{"title":"Learn PHP - Free Interactive PHP Tutorial",
+		"url":"https://www.learn-php.org/",
+		"views":0},
+		{"title":"PHP 5 Tutorial - W3Schools",
+		"url":"https://www.w3schools.com/php/",
+		"views":0},
+		{"title":"PHP: Hypertext Preprocessor",
+		"url":"https://php.net/",
+		"views":0}]
+
+	prolog_pages=[{"title":"Prolog | An Introduction - GeeksforGeeks",
+		"url":"https://www.geeksforgeeks.org/prolog-an-introduction/",
+		"views":0},
+		{"title":"Introduction to logic programming with Prolog",
+		"url":"https://www.matchilling.com/introduction-to-logic-programming-with-prolog/",
+		"views":0}]
+
+	postscript_pages=[{"title":"PostScript Tutorial - Paul Bourke",
+		"url":"paulbourke.net/dataformats/postscript/",
+		"views":0},
+		{"title":"Quick PostScript Programming Tutorial",
+		"url":"https://www.mostlymaths.net/2008/12/quick-postscript-programming-tutorial.html",
+		"views":0}]
+
+	programming_pages=[{"title":"Programming: Online Courses by Harvard, MIT, Microsoft",
+		"url":"https://www.edx.org/learn/computer-programming",
+		"views":0},
+		{"title":"Programming - Codecademy",
+		"url":"https://www.codecademy.com/catalog/subject/programming",
+		"views":0}]
+
 	cats = {"Python": {"pages": python_pages, "views":128, "likes":64},
 		"Django": {"pages": django_pages, "views":64, "likes":32},
-		"Other Frameworks": {"pages": other_pages, "views":32, "likes":16} }
+		"Other Frameworks": {"pages": other_pages, "views":32, "likes":16}, 
+		"Pascal":{"pages":pascal_pages, "views":0, "likes":0}, 
+		"Perl":{"pages":perl_pages, "views":0, "likes":0},
+		"PHP":{"pages":php_pages, "views":0, "likes":0}, 
+		"Prolog":{"pages":prolog_pages, "views":0, "likes":0}, 
+		"PostScript":{"pages":postscript_pages, "views":0, "likes":0},
+		"Programming":{"pages":programming_pages, "views":0, "likes":0},
+		}
 
 	# The code below goes through the cats dictionary, then adds each category,
 	# and then adds all the associated pages for that category.

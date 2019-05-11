@@ -115,9 +115,18 @@
     <div class="container-fluid">
 		<div class="row">
 		    <div class="col-sm-3 col-md-2 sidebar">
-		    	{% block sidebar_block %}
-					{% get_category_list category %}
-				{% endblock %}
+				<ul class="nav nav-list flex-column">
+					<hr>
+				<li class="nav-item"><strong>Type to find a category</strong></li>
+					<form>
+						<li class="nav-item">
+						<input class="search-query form-control" type="text" name="suggestion" value="" id="suggestion" />
+						</li>
+					</form>
+				</ul>
+				<hr>
+				<div id="cats">
+				</div>
 		    </div>
 		    <div class="col-sm-8 offset-sm-3 col-md-8 offset-md-1 main">
 		    	<div>
@@ -138,7 +147,10 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <!--my scripts-->
 	<script src="{% static 'js/rango-jquery.js' %}"></script>
+	<script src="{% static "js/jquery.min.js" %}"></script>
+	<script src="{% static "js/rango-ajax.js" %}"></script>
+
   </body>
 </html>
