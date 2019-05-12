@@ -33,7 +33,8 @@ SECRET_KEY = '@^p&(&^dl8nke)2eijlp2&k%r3+$9vdw-bb&rc6*lsf6ayi0e5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['http://luciacangarova.pythonanywhere.com']
+
 
 
 # Application definition
